@@ -1,18 +1,8 @@
 import re 
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
 
 def allowed_file(filename):
-    pattern = r'.*\.(?:png|jpg)'
-    if re.search(pattern, filename) == None:
-        return False
+    return '.' in filename and \
+               filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-    # More TODO
-
-    return True
-
-def secure_filename(filename):
-    # TODO
-
-    return True
-
-def extract_details(image_str):
-    pass
