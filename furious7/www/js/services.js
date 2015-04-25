@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
+.factory('Chats', function () {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
@@ -35,10 +35,10 @@ angular.module('starter.services', [])
     all: function() {
       return chats;
     },
-    remove: function(chat) {
+    remove: function (chat) {
       chats.splice(chats.indexOf(chat), 1);
     },
-    get: function(chatId) {
+    get: function (chatId) {
       for (var i = 0; i < chats.length; i++) {
         if (chats[i].id === parseInt(chatId)) {
           return chats[i];
@@ -51,7 +51,7 @@ angular.module('starter.services', [])
 
 // Camera Factory
 angular.module('starter.services', [])
-.factory('Camera', ['$cordovaCamera', function($cordovaCamera) {
+.factory('Camera', ['$cordovaCamera', function ($cordovaCamera) {
 
   // return {
   //   getPicture: function(options) {
@@ -69,7 +69,6 @@ angular.module('starter.services', [])
 
   return {
     getPicture: function () {
-
       document.addEventListener('deviceready', function () {
 
         var options = {
@@ -77,16 +76,45 @@ angular.module('starter.services', [])
           sourceType: Camera.PictureSourceType.CAMERA,
         };
 
-        $cordovaCamera.getPicture(options).then(function(imageURI) {
+        $cordovaCamera.getPicture(options).then(function (imageURI) {
           var image = document.getElementById('myImage');
           image.src = imageURI;
           return image.src;
-        }, function(err) {
-          console.log(err);
+        }, function (err) {
+          console.error(err);
           return err;
         });
         // $cordovaCamera.cleanup().then(...); // only for FILE_URI
       }, false);
     }
   }
+}])
+
+.factory('Calendar', ['$cordovaCalendar', function ($cordovaCalendar) {
+  return {
+    createEvent: function (d) {
+      $cordovaCalendar.createEvent(d).then(function (result) {
+        return result;
+      }, function (err) {
+        console.error(err);
+      });
+    }
+  }
+}])
+
+.factory('OCR', ['$q', function ($q) {
+  return {
+    processPicture: function () {
+      var q = $q.defer();
+      var d = {
+        title: 'Space Race',
+        location: 'The Moon',
+        notes: 'Bring sandwiches',
+        startDate: new Date(2015, 0, 6, 18, 30, 0, 0, 0),
+        endDate: new Date(2015, 1, 6, 12, 0, 0, 0, 0)
+      };
+      q.resolve(d);
+      return q.promise;
+    }
+  };
 }]);
