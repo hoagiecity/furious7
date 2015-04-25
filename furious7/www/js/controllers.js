@@ -1,6 +1,18 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope, Camera) {
+
+  $scope.takePicture = function () {
+    // Camera.getPicture().then(function(imageURI) {
+    //   console.log(imageURI);
+    // }, function(err) {
+    //   console.err(err);
+    // });
+
+    var imageURI = 'img/test.png';
+    console.log(imageURI);
+  }
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();

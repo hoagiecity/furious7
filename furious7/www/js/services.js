@@ -48,3 +48,45 @@ angular.module('starter.services', [])
     }
   };
 });
+
+// Camera Factory
+angular.module('starter.services', [])
+.factory('Camera', ['$cordovaCamera', function($cordovaCamera) {
+
+  // return {
+  //   getPicture: function(options) {
+  //     var q = $q.defer();
+  //     $cordovaCamera.getPicture(function(result) {
+  //       // Do any magic you need
+  //       q.resolve(result);
+  //     }, function(err) {
+  //       q.reject(err);
+  //     }, options);
+  //
+  //     return q.promise;
+  //   }
+  // }
+
+  return {
+    getPicture: function () {
+
+      document.addEventListener('deviceready', function () {
+
+        var options = {
+          destinationType: Camera.DestinationType.FILE_URI,
+          sourceType: Camera.PictureSourceType.CAMERA,
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageURI) {
+          var image = document.getElementById('myImage');
+          image.src = imageURI;
+          return image.src;
+        }, function(err) {
+          console.log(err);
+          return err;
+        });
+        // $cordovaCamera.cleanup().then(...); // only for FILE_URI
+      }, false);
+    }
+  }
+}]);
